@@ -1,0 +1,8 @@
+# ArduinoR4MinimaExperimentKit Keywords
+
+ArduinoR4MinimaExperimentKit	KEYWORD1
+begin	FUNCTION2
+readLightLevel	FUNCTION2
+readTemperature	FUNCTION2
+readDistance	FUNCTION2
+setFanSpeed	FUNCTION2

@@ -42,7 +42,7 @@ void setup(){
 
   drawFlag();
   showStartup();
-  //playNationalAnthem();
+  playNationalAnthem();
 
   Serial.println("Arduino EK R4 Demo");
   Serial.println("STEM Smart Labs");

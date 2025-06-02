@@ -261,7 +261,7 @@ void demoPotentiometer(){
     display.clearDisplay();
     display.setTextSize(2);
     display.setCursor(0,0); 
-    display.println("Potentiometer");
+    display.println("Trimpot");
     display.println();
     display.setTextSize(2);
     display.print(p); 

@@ -1,8 +1,7 @@
-int speakerPin = D11; //buzzer is connected to Pin 13 of the Board.
+int speakerPin = D11; 
 
 int length = 149; // the number of notes 
 char notes[] = "cdeeeeeeeeedef eeedddbdc ccgggggggggaf fffffeddf eedeedeggaff eeeeeddbdc cdeeeedf efgggfedfe feeeddbdc ccggggeggggga fffffedfe egc bab aga ccddeedef "; // a space represents a rest
-//char notes[] = "ccddeeeeeeedef eeedddb-dc cggggggggf#ag fffeeedfe eeeeedgggff eeedddb-dc cdeeeedef efgggfedfe eedddb-dc ggggggggggf#ag fffeeedfe egc+ bab aga ccddeedef "; // a space represents a rest
 int beats[] = { 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1,
                 2, 1, 1, 2, 1, 1, 1, 1, 1, 1,
                 2, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1,
@@ -41,7 +40,7 @@ void playNote(char note, int duration) { //Assigning high time for the notes
 }
 
 void setup() { 
-  pinMode(speakerPin, OUTPUT); // pin 7 as an OutPut Pin
+  pinMode(speakerPin, OUTPUT); 
 }
 
 void loop() {  //Main function

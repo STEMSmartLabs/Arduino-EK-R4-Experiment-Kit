@@ -1,7 +1,7 @@
-#include "DHT.h"
+#include "DHT.h" //DHT-sensor-library by Adafruit
 
-#define DHTPIN 8 // Digital pin connected to the DHT sensor
-#define DHTTYPE DHT11 // DHT 11
+#define DHTPIN D8
+#define DHTTYPE DHT11 
 
 DHT dht(DHTPIN, DHTTYPE);
 

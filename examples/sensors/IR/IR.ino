@@ -1,4 +1,4 @@
-#include <IRremote.h>
+#include <IRremote.h> //Library IRremote 
 
 int RECV_PIN = A0; // Pin connected to the IR receiver
 IRrecv irrecv(RECV_PIN);

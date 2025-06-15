@@ -1,17 +1,19 @@
-#include <IRremote.h> //Library IRremote 
+#include <IRremote.hpp>
 
-int RECV_PIN = A0; // Pin connected to the IR receiver
-IRrecv irrecv(RECV_PIN);
-decode_results results;
+int RECV_PIN = 6; // Pin connected to the IR receiver
 
 void setup() {
-  Serial.begin(9600); // Start serial communication
-  irrecv.enableIRIn(); // Start the receiver
+  Serial.begin(9600);
+  IrReceiver.begin(RECV_PIN, DISABLE_LED_FEEDBACK); 
 }
 
 void loop() {
-  if (irrecv.decode(&results)) {
-    Serial.println(results.value, HEX); // Print received value in HEX format
-    irrecv.resume(); // Prepare for the next signal
+  if (IrReceiver.decode()) {
+    // Only print if the decoded value is NOT 0
+    if (IrReceiver.decodedIRData.decodedRawData != 0) { 
+      Serial.println(IrReceiver.decodedIRData.decodedRawData, HEX);
+    }
+    // Always resume the receiver regardless of what was decoded
+    IrReceiver.resume(); 
   }
 }

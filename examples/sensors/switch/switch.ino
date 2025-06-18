@@ -1,5 +1,5 @@
 // Pin for the switch
-const int switchPin = 2;
+const int switchPin = A3;
 
 // Variable to hold switch state
 int switchState = 0;

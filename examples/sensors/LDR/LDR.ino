@@ -1,6 +1,5 @@
 const int ledPin = LED_BUILTIN; // Digital pin connected to LED
 const int ldrPin = A0; // Analog pin connected to LDR
-
 void setup() {
   pinMode(ledPin, OUTPUT);
   Serial.begin(9600);
@@ -8,7 +7,7 @@ void setup() {
 
 void loop() {
   int ldrValue = analogRead(ldrPin);
-  if (ldrValue < 300) { // Adjust threshold as needed
+  if (ldrValue < 50) { // Adjust threshold as needed
     digitalWrite(ledPin, HIGH); // Turn LED ON when dark
     Serial.println("LDR is DARK, LED is ON");
   } else {

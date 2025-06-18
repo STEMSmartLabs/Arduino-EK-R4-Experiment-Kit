@@ -8,7 +8,7 @@ void setup() {
 
 void loop() {
   int ldrValue = analogRead(ldrPin);
-  if (ldrValue < 300) { // Adjust threshold as needed
+  if (ldrValue < 50) { // Adjust threshold as needed
     digitalWrite(ledPin, HIGH); // Turn LED ON when dark
     Serial.println("LDR is DARK, LED is ON");
   } else {

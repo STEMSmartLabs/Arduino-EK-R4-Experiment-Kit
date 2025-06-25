@@ -3,7 +3,7 @@ const int lightPin = D3;    // LED connected to Digital Pin D3 (PWM capable)
 
 
 const int minLDRValue = 50; // LDR value for "completely dark" 
-const int maxLDRValue = 800; // LDR value for "bright" 
+const int maxLDRValue = 180; // LDR value for "bright" 
 
 void setup() {
   pinMode(lightPin, OUTPUT);

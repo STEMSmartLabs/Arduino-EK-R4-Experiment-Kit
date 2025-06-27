@@ -1,5 +1,5 @@
 
-int ledPin = D3;  // LED connected to digital pin 9
+int ledPin = D3;  // LED connected to digital pin 3
 
 void setup() {
   // nothing happens in setup

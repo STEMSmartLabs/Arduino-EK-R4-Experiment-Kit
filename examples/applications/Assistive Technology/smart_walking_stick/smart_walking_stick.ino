@@ -1,44 +1,59 @@
 // Project: Smart Walking Stick for Visually Challenged People
 // Category: Assistive Technology
 
-// Hardware:
-// - Arduino EK R4 Minima
-// - Ultrasonic Sensor (D4/D7)
-// - Neopixel Ring (D5)
-// - LDR (A0)
-// - Buzzer (D11)
-
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 #include <Adafruit_NeoPixel.h>
+#include "SMLimage.h"
 
-#ifdef __AVR__
-#include <avr/power.h> // Required for old AVR boards for NeoPixel
-#endif
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET -1
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-// NeoPixel definitions
-#define PIXEL_PIN D5      // NeoPixel Ring pin
-#define NUMPIXELS 12      // Number of pixels in your ring
+#define PIXEL_PIN D5
+#define NUMPIXELS 12
 Adafruit_NeoPixel pixels(NUMPIXELS, PIXEL_PIN, NEO_GRB + NEO_KHZ800);
 
-const int trigPin = D4;     // Ultrasonic Sensor Trigger pin
-const int echoPin = D7;     // Ultrasonic Sensor Echo pin
-const int ldrPin = A0;      // LDR connected to Analog Pin A0
-const int buzzerPin = D11;  // Buzzer pin
+#define trigPin D4
+#define echoPin D7
+#define ldrPin A0
+#define buzzerPin D11
+#define PIXEL_SWITCH_PIN A3  // Switch to enable/disable NeoPixel
 
-const long obstacleDistance_cm = 30; // Distance to alert for obstacles
-const int darkThreshold = 300;       // LDR value for darkness (lower is darker)
+const long obstacleDistance_cm = 30;
+const int darkThreshold = 300;
+
+bool pixelEnabled = true;
+
+void showSMLLogo() {
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  display.clearDisplay();
+  display.drawBitmap(0, 0, SMLimage, 128, 64, 1);
+  display.display();
+  delay(2000);
+  display.clearDisplay();
+}
 
 void setup() {
   Serial.begin(9600);
+
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   pinMode(ldrPin, INPUT);
   pinMode(buzzerPin, OUTPUT);
+  pinMode(PIXEL_SWITCH_PIN, INPUT_PULLUP); // Switch with pull-up
 
   pixels.begin();
-  pixels.show(); // Initialize all pixels to 'off'
+  pixels.show();
+
+  showSMLLogo();
 }
 
 void loop() {
+  // Read switch status (LOW = ON, HIGH = OFF)
+  pixelEnabled = (digitalRead(PIXEL_SWITCH_PIN) == LOW);
+
   // Ultrasonic obstacle detection
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
@@ -53,26 +68,40 @@ void loop() {
   Serial.println(" cm");
 
   if (distance_cm > 1 && distance_cm <= obstacleDistance_cm) {
-    // Obstacle detected
-    digitalWrite(buzzerPin, HIGH); // Buzz
-    pixels.fill(pixels.Color(255, 0, 0)); // Red for obstacle
-    pixels.show();
+    // Buzzer beep 3 times
+    for (int i = 0; i < 3; i++) {
+      tone(buzzerPin, 1000);   // 1000 Hz beep
+      delay(150);
+      noTone(buzzerPin);
+      delay(100);
+    }
+
+    if (pixelEnabled) {
+      pixels.fill(pixels.Color(255, 0, 0)); // Red
+      pixels.show();
+    } else {
+      pixels.clear();
+      pixels.show();
+    }
+
     Serial.println("Obstacle detected!");
   } else {
-    digitalWrite(buzzerPin, LOW); // No buzz
-    // Check LDR for night light
+    noTone(buzzerPin);  // Ensure buzzer is off
+
+    // Read LDR
     int ldrValue = analogRead(ldrPin);
     Serial.print("LDR Value: ");
     Serial.println(ldrValue);
 
-    if (ldrValue < darkThreshold) {
-      pixels.fill(pixels.Color(0, 0, 255)); // Blue for night light
+    if (pixelEnabled && ldrValue < darkThreshold) {
+      pixels.fill(pixels.Color(0, 0, 255)); // Blue
       pixels.show();
       Serial.println("Darkness detected - Night light ON");
     } else {
-      pixels.clear(); // Turn off NeoPixels
+      pixels.clear();
       pixels.show();
     }
   }
-  delay(100); // Small delay
+
+  delay(100);
 }

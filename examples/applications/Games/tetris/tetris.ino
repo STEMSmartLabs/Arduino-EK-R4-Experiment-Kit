@@ -1,13 +1,3 @@
-/* Tiny Tetris by Anthony Russell 17-09-2016 */
-/* V0.91 modified for IR Remote control, Adafruit OLED Library, and SMLimage startup */
-/* Implemented High Score using EEPROM and displayed Current/High Score on right side */
-
-// To do:
-// Decent random number generator.
-// Create a proper system for rendering numbers and letters (current score display is a bit hacky).
-// Tidy up code and optimize for memory, sort out the globals and types.
-// Create defines for all the magic numbers but they are useful for now.
-
 #include <Wire.h>
 #include <IRremote.hpp> // Using the latest IRremote.hpp library
 #include <Adafruit_GFX.h> // Core graphics library

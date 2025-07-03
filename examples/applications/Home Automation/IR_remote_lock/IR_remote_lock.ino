@@ -1,3 +1,4 @@
+#include <Wire.h>
 #include <IRremote.hpp>
 #include <Servo.h>
 #include <EEPROM.h>
@@ -23,8 +24,7 @@ const int buzzerPin = 11;
 
 Servo myServo;
 
-// Password settings
-const String correctPassword = "2025";
+// State variables
 String enteredPassword = "";
 bool enteringPassword = false;
 bool waitingToLock = false;
@@ -32,9 +32,14 @@ int attempts = 0;
 const int maxAttempts = 3;
 bool lockedOut = false;
 unsigned long lockoutStartTime = 0;
-const int lockoutDuration = 10000; // 10 seconds
+const int lockoutDuration = 10000;
 
-#define EEPROM_ADDR_ATTEMPTS 0  // EEPROM address to store attempt count
+#define EEPROM_ADDR_ATTEMPTS 10
+#define EEPROM_ADDR_PASSWORD 0
+const byte ENCRYPTION_KEY = 0x5A;
+
+const int lockedAngle = 0;
+const int unlockedAngle = 90;
 
 // IR Codes
 const unsigned long OK_BUTTON = 0xBF40FF00;
@@ -49,10 +54,9 @@ const unsigned long NUM_7     = 0xF708FF00;
 const unsigned long NUM_8     = 0xE31CFF00;
 const unsigned long NUM_9     = 0xA55AFF00;
 
-const int lockedAngle = 0;
-const int unlockedAngle = 90;
-
 void setup() {
+  Wire.begin();  // ✅ Required for OLED
+
   pinMode(buzzerPin, OUTPUT);
   IrReceiver.begin(RECV_PIN, ENABLE_LED_FEEDBACK);
   myServo.attach(servoPin);
@@ -63,40 +67,35 @@ void setup() {
   pixels.show();
 
   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) while (true);
+  display.setTextColor(SSD1306_WHITE);
+  display.setTextWrap(true);
 
   display.clearDisplay();
   display.drawBitmap(0, 0, SMLimage, 128, 64, WHITE);
   display.display();
   delay(2000);
 
-  // EEPROM debug
   Serial.begin(9600);
   attempts = EEPROM.read(EEPROM_ADDR_ATTEMPTS);
-  Serial.print("EEPROM stored attempts: ");
-  Serial.println(attempts);
-
   if (attempts >= maxAttempts) {
     lockedOut = true;
     lockoutStartTime = millis();
   }
 
-  display.clearDisplay();
   displayStatus("LOCKED");
 }
 
 void loop() {
   if (lockedOut) {
-    // Show countdown
     unsigned long elapsed = millis() - lockoutStartTime;
     while (elapsed < lockoutDuration) {
       int secondsLeft = (lockoutDuration - elapsed) / 1000 + 1;
 
       display.clearDisplay();
-      display.setTextSize(2);
       display.setTextColor(SSD1306_WHITE);
+      display.setTextSize(2);
       display.setCursor(7, 10);
       display.println("LOCKED OUT");
-
       display.setTextSize(3);
       display.setCursor(45, 35);
       display.print(secondsLeft);
@@ -108,7 +107,7 @@ void loop() {
 
     lockedOut = false;
     attempts = 0;
-    EEPROM.update(EEPROM_ADDR_ATTEMPTS, attempts);  // Clear stored count
+    EEPROM.update(EEPROM_ADDR_ATTEMPTS, attempts);
     displayStatus("LOCKED");
     delay(1000);
     return;
@@ -119,7 +118,8 @@ void loop() {
 
     if (waitingToLock && code == OK_BUTTON) {
       myServo.write(lockedAngle);
-      pixels.clear(); pixels.show();
+      pixels.clear();
+      pixels.show();
       displayStatus("LOCKED");
       waitingToLock = false;
       IrReceiver.resume();
@@ -138,21 +138,22 @@ void loop() {
         displayPasswordScreen();
 
         if (enteredPassword.length() == 4) {
-          if (enteredPassword == correctPassword) {
+          if (enteredPassword == readDecryptedPassword()) {
             myServo.write(unlockedAngle);
             displayStatus("UNLOCKED");
             showColor(0, 255, 0);
             waitingToLock = true;
             attempts = 0;
-            EEPROM.update(EEPROM_ADDR_ATTEMPTS, attempts); // Reset on success
+            EEPROM.update(EEPROM_ADDR_ATTEMPTS, attempts);
           } else {
             attempts++;
-            EEPROM.update(EEPROM_ADDR_ATTEMPTS, attempts); // Save failure
+            EEPROM.update(EEPROM_ADDR_ATTEMPTS, attempts);
             displayStatus("WRONG PASS");
             playFNote();
             showColor(255, 0, 0);
             delay(3000);
-            pixels.clear(); pixels.show();
+            pixels.clear();
+            pixels.show();
 
             if (attempts >= maxAttempts) {
               lockedOut = true;
@@ -172,12 +173,21 @@ void loop() {
   delay(100);
 }
 
-// ---------- Helper Functions ----------
+// -------- Helper Functions --------
+
+String readDecryptedPassword() {
+  String decrypted = "";
+  for (int i = 0; i < 4; i++) {
+    char encryptedChar = EEPROM.read(EEPROM_ADDR_PASSWORD + i);
+    decrypted += char(encryptedChar ^ ENCRYPTION_KEY);
+  }
+  return decrypted;
+}
 
 void displayStatus(String message) {
   display.clearDisplay();
-  display.setTextSize(2);
   display.setTextColor(SSD1306_WHITE);
+  display.setTextSize(2);
   int16_t x1, y1;
   uint16_t w, h;
   display.getTextBounds(message, 0, 0, &x1, &y1, &w, &h);
@@ -188,6 +198,7 @@ void displayStatus(String message) {
 
 void displayPasswordScreen() {
   display.clearDisplay();
+  display.setTextColor(SSD1306_WHITE);
   display.setTextSize(1);
   display.setCursor(0, 0);
   display.println("Enter Password:");

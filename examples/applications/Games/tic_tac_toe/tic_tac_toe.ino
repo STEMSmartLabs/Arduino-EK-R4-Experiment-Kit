@@ -16,7 +16,7 @@ char grid[3][3];
 int cursorX = 0, cursorY = 0;
 bool isXTurn = true;
 bool vsComputer = false;
-bool waitForFreshMove = false; // 👈 New flag to ignore accidental moves
+bool waitForFreshMove = false;
 
 const unsigned long UP     = 0xB946FF00;
 const unsigned long DOWN   = 0xEA15FF00;
@@ -28,7 +28,6 @@ void setup() {
   pinMode(BUZZER_PIN, OUTPUT);
   IrReceiver.begin(IR_PIN, ENABLE_LED_FEEDBACK);
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-
   display.clearDisplay();
   display.drawBitmap(0, 0, SMLimage, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
   display.display();
@@ -43,7 +42,6 @@ void loop() {
   if (IrReceiver.decode()) {
     unsigned long code = IrReceiver.decodedIRData.decodedRawData;
 
-    // ⏳ Prevent leftover IR input from triggering a move
     if (waitForFreshMove) {
       waitForFreshMove = false;
       IrReceiver.resume();
@@ -55,8 +53,8 @@ void loop() {
     else if (code == LEFT && cursorX > 0) cursorX--;
     else if (code == RIGHT && cursorX < 2) cursorX++;
     else if (code == SELECT) {
-      if (grid[cursorY][cursorX] == ' ' && isXTurn) {
-        grid[cursorY][cursorX] = 'X';
+      if (grid[cursorY][cursorX] == ' ') {
+        grid[cursorY][cursorX] = isXTurn ? 'X' : 'O';
         tone(BUZZER_PIN, 800, 100);
         drawBoard();
 
@@ -72,7 +70,7 @@ void loop() {
           showMenu();
           resetGrid();
         } else {
-          isXTurn = false;
+          isXTurn = !isXTurn;
         }
       }
     }
@@ -128,10 +126,9 @@ void showMenu() {
       } else if (code == SELECT) {
         vsComputer = !selectingFriend;
         tone(BUZZER_PIN, 1000, 100);
-        delay(2000);              // Wait to settle
-        //IrReceiver.flush();       // 🧹 Clear IR buffer
+        delay(2000);
         IrReceiver.resume();
-        waitForFreshMove = true;  // 🛑 Don't accept SELECT again immediately
+        waitForFreshMove = true;
         break;
       }
 
@@ -207,7 +204,6 @@ void showDraw() {
 }
 
 void computerMove() {
-  // Try to win
   for (int y = 0; y < 3; y++) {
     for (int x = 0; x < 3; x++) {
       if (grid[y][x] == ' ') {
@@ -221,7 +217,6 @@ void computerMove() {
     }
   }
 
-  // Try to block
   for (int y = 0; y < 3; y++) {
     for (int x = 0; x < 3; x++) {
       if (grid[y][x] == ' ') {
@@ -236,7 +231,6 @@ void computerMove() {
     }
   }
 
-  // Pick first empty
   for (int y = 0; y < 3; y++) {
     for (int x = 0; x < 3; x++) {
       if (grid[y][x] == ' ') {

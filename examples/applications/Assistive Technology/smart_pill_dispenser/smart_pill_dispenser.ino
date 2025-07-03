@@ -13,15 +13,15 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 #define BUZZER_PIN 11
 #define BUTTON_PIN 12
 #define NEOPIXEL_PIN 5
-#define ACCEL_PIN A2  // Simulated analog tremor detection
 #define POT_PIN A1
 
 Servo pillServo;
 Adafruit_NeoPixel ring(1, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
 
 unsigned long lastDoseTime = 0;
-const unsigned long doseInterval = 30000; // 30 sec for testing
+const unsigned long doseInterval = 30000; // 30 seconds for testing
 bool doseDue = false;
+bool blinking = false;
 
 void showSMLLogo() {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
@@ -35,10 +35,8 @@ void showSMLLogo() {
 void setup() {
   pinMode(BUZZER_PIN, OUTPUT);
   pinMode(BUTTON_PIN, INPUT_PULLUP);
-  pillServo.attach(SERVO_PIN);
   ring.begin();
   ring.show();
-
   showSMLLogo();
   lastDoseTime = millis();
 }
@@ -46,33 +44,60 @@ void setup() {
 void loop() {
   unsigned long currentTime = millis();
 
-  // Check if it's time for dose
+  // Time to dispense pill
   if (currentTime - lastDoseTime >= doseInterval && !doseDue) {
     doseDue = true;
-    pillServo.write(90); // Rotate to next compartment
+    blinking = false;
+    rotateServoOpen();          // Servo 90 → 0 (dispense)
     buzzReminder();
     displayDoseReminder();
   }
 
-  // Check for button press to confirm dose
+  // User confirms pill taken
   if (doseDue && digitalRead(BUTTON_PIN) == LOW) {
     doseDue = false;
+    blinking = false;
+    rotateServoClose();         // Servo back to 90 (close)
     lastDoseTime = currentTime;
-    pillServo.write(0); // Reset servo
     displayConfirmation();
     delay(1000);
+  }
+
+  // If user has not pressed button within 10 seconds after due
+  if (doseDue && (currentTime - lastDoseTime >= doseInterval + 10000)) {
+    blinking = true;
   }
 
   updateNeoPixel(currentTime - lastDoseTime);
 }
 
+// Rotate servo from 90 → 0 (simulate open)
+void rotateServoOpen() {
+  pillServo.attach(SERVO_PIN);
+  pillServo.write(90);
+  delay(500);
+  pillServo.write(0);
+  delay(500);
+  pillServo.detach();
+}
+
+// Rotate servo back to 90 (simulate close)
+void rotateServoClose() {
+  pillServo.attach(SERVO_PIN);
+  pillServo.write(90);
+  delay(500);
+  pillServo.detach();
+}
+
+// Buzzer buzzes with volume based on potentiometer
 void buzzReminder() {
-  int volume = analogRead(POT_PIN) / 4; // 0–255
+  int volume = analogRead(POT_PIN) / 4; // Map 0–1023 to 0–255
   analogWrite(BUZZER_PIN, volume);
   delay(500);
   analogWrite(BUZZER_PIN, 0);
 }
 
+// Show reminder on OLED
 void displayDoseReminder() {
   display.clearDisplay();
   display.setTextSize(1);
@@ -84,6 +109,7 @@ void displayDoseReminder() {
   display.display();
 }
 
+// Show confirmation on OLED
 void displayConfirmation() {
   display.clearDisplay();
   display.setCursor(0, 20);
@@ -91,12 +117,34 @@ void displayConfirmation() {
   display.display();
 }
 
+// Update NeoPixel based on time
 void updateNeoPixel(unsigned long sinceLastDose) {
-  int brightness = map(sinceLastDose, 0, doseInterval * 2, 255, 10);
-  int red = map(sinceLastDose, 0, doseInterval * 2, 0, 255);
-  int green = 255 - red;
+  if (doseDue && blinking) {
+    static unsigned long lastBlink = 0;
+    static bool ledOn = false;
+
+    if (millis() - lastBlink > 500) {
+      ledOn = !ledOn;
+      lastBlink = millis();
+    }
+
+    if (ledOn) {
+      ring.setPixelColor(0, ring.Color(255, 0, 0)); // Red
+    } else {
+      ring.setPixelColor(0, 0); // Off
+    }
+
+    ring.setBrightness(255);
+    ring.show();
+    return;
+  }
+
+  // Fade from yellow to red
+  int red = 255;
+  int green = map(sinceLastDose, 0, doseInterval, 255, 0);
+  green = constrain(green, 0, 255);
 
   ring.setPixelColor(0, ring.Color(red, green, 0));
-  ring.setBrightness(brightness);
+  ring.setBrightness(200);
   ring.show();
 }

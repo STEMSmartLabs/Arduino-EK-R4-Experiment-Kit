@@ -1,49 +1,93 @@
 #include <SPI.h>
 #include <MFRC522.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
-#include "SMLimage.h"
+#include <EEPROM.h>
 
-#define SS_PIN 2
-#define RST_PIN 4
-#define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 64
-#define OLED_RESET -1
+#define SS_PIN A2     // RFID SDA
+#define RST_PIN A3    // RFID RST
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-void showSMLLogo() {
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-  display.clearDisplay();
-  display.drawBitmap(0, 0, SMLimage, 128, 64, 1);
-  display.display();
-  delay(2000);
-  display.clearDisplay();
-}
+const int UID_SIZE = 4;
+const int MAX_UIDS = 25; // You can store up to 25 unique UIDs (4 bytes each)
+int storedUIDs = 0;
 
 void setup() {
+  Serial.begin(9600);
+  while (!Serial); // Wait for Serial Monitor to open
+
   SPI.begin();
   mfrc522.PCD_Init();
-  showSMLLogo();
+  delay(100);
+
+  Serial.println("RFID Attendance Logger Ready");
+  storedUIDs = EEPROM.read(0); // EEPROM[0] holds count
+  if (storedUIDs > MAX_UIDS) storedUIDs = 0;
+
+  Serial.print("Stored UID count: ");
+  Serial.println(storedUIDs);
 }
 
 void loop() {
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
-  display.clearDisplay();
-  display.setCursor(0, 0);
-  display.println("Scan your card...");
-  display.display();
-
   if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial()) return;
 
-  display.clearDisplay();
-  display.setCursor(0, 20);
-  display.print("UID: ");
-  for (byte i = 0; i < mfrc522.uid.size; i++) {
-    display.print(mfrc522.uid.uidByte[i], HEX);
+  byte scannedUID[UID_SIZE];
+  for (int i = 0; i < UID_SIZE; i++) {
+    scannedUID[i] = mfrc522.uid.uidByte[i];
   }
-  display.display();
-  delay(3000);
+
+  Serial.print("Scanned UID: ");
+  printUID(scannedUID);
+
+  if (isNewUID(scannedUID)) {
+    if (storedUIDs < MAX_UIDS) {
+      saveUID(scannedUID);
+      Serial.println("-> New UID logged.");
+    } else {
+      Serial.println("-> Memory full. UID not saved.");
+    }
+  } else {
+    Serial.println("-> UID already logged.");
+  }
+
+  // Always display current count
+  Serial.print("Total Stored UIDs: ");
+  Serial.println(storedUIDs);
+
+  mfrc522.PICC_HaltA();
+  mfrc522.PCD_StopCrypto1();
+  delay(1000);
+}
+
+void printUID(byte *uid) {
+  for (int i = 0; i < UID_SIZE; i++) {
+    Serial.print("0x");
+    if (uid[i] < 0x10) Serial.print("0");
+    Serial.print(uid[i], HEX);
+    Serial.print(" ");
+  }
+  Serial.println();
+}
+
+bool isNewUID(byte *uid) {
+  for (int i = 0; i < storedUIDs; i++) {
+    int baseAddr = 1 + (i * UID_SIZE);
+    bool match = true;
+    for (int j = 0; j < UID_SIZE; j++) {
+      if (EEPROM.read(baseAddr + j) != uid[j]) {
+        match = false;
+        break;
+      }
+    }
+    if (match) return false;
+  }
+  return true;
+}
+
+void saveUID(byte *uid) {
+  int baseAddr = 1 + (storedUIDs * UID_SIZE);
+  for (int i = 0; i < UID_SIZE; i++) {
+    EEPROM.write(baseAddr + i, uid[i]);
+  }
+  storedUIDs++;
+  EEPROM.write(0, storedUIDs); // Save updated count
 }

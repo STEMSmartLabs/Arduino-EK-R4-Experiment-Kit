@@ -1,10 +1,7 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <Adafruit_NeoPixel.h>
-
-#ifdef __AVR__
-#include <avr/power.h>
-#endif
+#include "SMLimage.h"  // Include the correct startup image header
 
 // OLED
 #define SCREEN_WIDTH 128
@@ -23,6 +20,7 @@ const int echoPin = D7;
 const int buzzerPin = D11;
 const int parkingModeButton = D12;
 
+// Variables
 bool parkingMode = false;
 unsigned long lastBeepTime = 0;
 bool buzzerState = false;
@@ -46,8 +44,12 @@ void setup() {
     while (true);
   }
 
+  // Show splash image
+  display.clearDisplay();
+  display.drawBitmap(0, 0, SMLimage, 128, 64, SSD1306_WHITE); // Draw the SMLimage logo
   display.display();
   delay(2000);
+
   display.clearDisplay();
   updateOLED("Off");
 }
@@ -88,30 +90,30 @@ void loop() {
 
     updateOLED(String(distance_cm) + " cm");
 
-    // Decide buzzer & pixel behavior
+    // Buzzer and NeoPixel Logic
     if (distance_cm > 1 && distance_cm <= 15) {
-      tone(buzzerPin, 349); // Play F note (F4 = 349 Hz)
-      beepInterval = 0;     // No toggling needed
+      tone(buzzerPin, 349); // Continuous tone
+      beepInterval = 0;
       pixels.fill(pixels.Color(255, 0, 0)); // Red
       pixels.show();
     } else if (distance_cm > 15 && distance_cm <= 30) {
-      beepInterval = 300;     // Fast beep
-      beepFrequency = 1000;   // High-pitched
+      beepInterval = 300; // Fast beeping
+      beepFrequency = 1000;
       pixels.fill(pixels.Color(255, 255, 0)); // Yellow
       pixels.show();
     } else if (distance_cm > 30 && distance_cm <= 60) {
-      beepInterval = 1000;    // Slow beep
-      beepFrequency = 800;    // Medium pitch
+      beepInterval = 1000; // Slow beeping
+      beepFrequency = 800;
       pixels.fill(pixels.Color(0, 255, 0)); // Green
       pixels.show();
     } else {
       beepInterval = -1;
-      noTone(buzzerPin); // No sound
+      noTone(buzzerPin);
       pixels.clear();
       pixels.show();
     }
 
-    // Beep timing logic (only for green/yellow zones)
+    // Beep logic for Green/Yellow zones
     if (beepInterval > 0) {
       unsigned long currentTime = millis();
       if (currentTime - lastBeepTime >= beepInterval) {
@@ -124,8 +126,6 @@ void loop() {
         lastBeepTime = currentTime;
       }
     }
-
-    // Continuous tone already handled in Red zone
   }
 
   delay(50);

@@ -16,7 +16,6 @@ char grid[3][3];
 int cursorX = 0, cursorY = 0;
 bool isXTurn = true;
 bool vsComputer = false;
-bool waitForFreshMove = false;
 
 const unsigned long UP     = 0xB946FF00;
 const unsigned long DOWN   = 0xEA15FF00;
@@ -41,12 +40,6 @@ void setup() {
 void loop() {
   if (IrReceiver.decode()) {
     unsigned long code = IrReceiver.decodedIRData.decodedRawData;
-
-    if (waitForFreshMove) {
-      waitForFreshMove = false;
-      IrReceiver.resume();
-      return;
-    }
 
     if (code == UP && cursorY > 0) cursorY--;
     else if (code == DOWN && cursorY < 2) cursorY++;
@@ -83,6 +76,9 @@ void loop() {
     delay(500);
     computerMove();
 
+    drawBoard();         // Show O's move
+    delay(1000);         // Pause so user sees O's move
+
     char winner = checkWinner();
     if (winner != ' ') {
       showWinner(winner);
@@ -97,13 +93,16 @@ void loop() {
     } else {
       isXTurn = true;
     }
-
-    drawBoard();
   }
 }
 
 void showMenu() {
   bool selectingFriend = true;
+
+  // Flush any pending IR input before showing menu
+  while (IrReceiver.decode()) {
+    IrReceiver.resume();
+  }
 
   while (true) {
     display.clearDisplay();
@@ -127,8 +126,11 @@ void showMenu() {
         vsComputer = !selectingFriend;
         tone(BUZZER_PIN, 1000, 100);
         delay(2000);
-        IrReceiver.resume();
-        waitForFreshMove = true;
+
+        // Flush IR buffer after selection
+        while (IrReceiver.decode()) {
+          IrReceiver.resume();
+        }
         break;
       }
 
@@ -204,6 +206,7 @@ void showDraw() {
 }
 
 void computerMove() {
+  // Try to win
   for (int y = 0; y < 3; y++) {
     for (int x = 0; x < 3; x++) {
       if (grid[y][x] == ' ') {
@@ -217,6 +220,7 @@ void computerMove() {
     }
   }
 
+  // Block X from winning
   for (int y = 0; y < 3; y++) {
     for (int x = 0; x < 3; x++) {
       if (grid[y][x] == ' ') {
@@ -231,6 +235,7 @@ void computerMove() {
     }
   }
 
+  // Otherwise, pick first empty spot
   for (int y = 0; y < 3; y++) {
     for (int x = 0; x < 3; x++) {
       if (grid[y][x] == ' ') {

@@ -2,7 +2,7 @@
 
 ![Made in India](https://img.shields.io/badge/Origin-Made%20in%20India-orange)
 
-![Arduino EK R4 Experiment Kit](https://shop.stemsmartlabs.com/wp-content/uploads/2025/05/ArduinoEk_IMage.png)
+![Arduino EK R4 Experiment Kit](https://shop.stemsmartlabs.com/wp-content/uploads/2025/07/ArduinoEk_IMage.png)
  
 
 ## Overview

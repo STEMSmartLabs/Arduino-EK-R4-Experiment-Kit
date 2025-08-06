@@ -1,15 +1,15 @@
-# Arduino EK R4 Experiment Kit 
+# Arduino एक R4 Experiment Kit 
 _Discover the Inventor in You_
 
 ![Made in India](https://img.shields.io/badge/Origin-Made%20in%20India-orange)
 
-![Arduino EK R4 Experiment Kit](https://shop.stemsmartlabs.com/wp-content/uploads/2025/07/ArduinoEk_IMage.png)
+![Arduino एक R4 Experiment Kit](https://shop.stemsmartlabs.com/wp-content/uploads/2025/07/ArduinoEk_IMage.png)
 
- [🛒  Buy Arduino EK R4 Experiment Kit](https://shop.stemsmartlabs.com/shop/neo-inventor-arduino-minima-r4/)
+ [🛒  Buy Arduino एक R4 Experiment Kit](https://shop.stemsmartlabs.com/shop/neo-inventor-arduino-minima-r4/)
 
 ## Overview:
 
-The **Arduino EK R4 Experiment Kit** is a fully-loaded, classroom-ready development board designed to help students (and hobbyists) learn the fundamentals of electronics, programming, and mechatronics. It combines the power of the **Arduino EK R4 Minima** with onboard sensors, actuators, an OLED display, NeoPixel ring, and four Grove-compatible external sensor ports—everything you need to prototype 50+ hands-on projects.
+The **Arduino एक R4 Experiment Kit** is a fully-loaded, classroom-ready development board designed to help students (and hobbyists) learn the fundamentals of electronics, programming, and mechatronics. It combines the power of the **Arduino एक R4 Minima** with onboard sensors, actuators, an OLED display, NeoPixel ring, and four Grove-compatible external sensor ports—everything you need to prototype 50+ hands-on projects.
 
 
 ## Demo Program:
@@ -20,9 +20,9 @@ You can navigate through the different demo examples using the **arrow keys** on
 
 ---
 
-## Setting Up Arduino EK R4 Experiment Kit 
+## Setting Up Arduino एक R4 Experiment Kit 
 
-**Install the Arduino EK R4 Experiment Kit Library and Dependencies**
+**Install the Arduino एक R4 Experiment Kit Library and Dependencies**
 
 Before starting with your projects, make sure you have the **Arduino IDE** installed and set up properly.
 
@@ -36,7 +36,7 @@ If you don’t already have the Arduino IDE:
 Need help? Watch this step-by-step video:  
 [How to Install Arduino IDE](https://www.youtube.com/watch?v=7h_KRz9gVKc&list=PL_NAQ0cj_VWI-FwRrFVTtYNqDVCF2LvEG&index=1&pp=iAQB)
 
-## Install the Arduino EK R4 Experiment Kit (ZIP)
+## Install the Arduino एक R4 Experiment Kit (ZIP)
 
 To get started with the projects, you need to install the custom library provided in our GitHub repository. Follow the steps below:
 
@@ -70,14 +70,14 @@ In the Library Manager, search  and install the latest version of the following 
 | **DHT sensor library (Kxn)** | For temperature & humidity sensor |
 | **RTClib** | For real-time clock module |
 
-Need help? Watch this step-by-step video:  [How to install Arduino EK R4 Experiment Kit library](https://youtu.be/NynkjxE_f0E)  
+Need help? Watch this step-by-step video:  [How to install Arduino एक R4 Experiment Kit library](https://youtu.be/NynkjxE_f0E)  
 
 ## Kit Modules – Examples & Video Tutorials
 
-Each module in the **Arduino EK R4 Experiment Kit** is supported by a dedicated .ino example file and a video tutorial to help you understand its functionality and how to use it in real-world applications.
+Each module in the **Arduino एक R4 Experiment Kit** is supported by a dedicated .ino example file and a video tutorial to help you understand its functionality and how to use it in real-world applications.
 
 You can access all module examples directly from the Arduino IDE:  
-**File** → **Examples** → **Arduino EK R4 Experiment Kit** → **examples** → **sensors**
+**File** → **Examples** → **Arduino एक R4 Experiment Kit** → **examples** → **sensors**
 
 Click on the video link next to each module in the table below to watch a step-by-step demonstration.
 
@@ -98,11 +98,11 @@ Click on the video link next to each module in the table below to watch a step-b
 | Switch | Reads toggle switch on/off state | [View Code](https://github.com/STEMSmartLabs/Arduino-EK-R4-Experiment-Kit/tree/main/examples/sensors/Switch/Switch.ino) | [Watch Video](https://youtu.be/XIhvD9RvUtk?list=PL_NAQ0cj_VWI-FwRrFVTtYNqDVCF2LvEG) |
 | Trimpot | Reads analog value from potentiometer | [View Code](https://github.com/STEMSmartLabs/Arduino-EK-R4-Experiment-Kit/tree/main/examples/sensors/TrimPOT/TrimPOT.ino) | [Watch Video](https://youtu.be/jsoSBXgQ93w?list=PL_NAQ0cj_VWI-FwRrFVTtYNqDVCF2LvEG) |
 
- [🛒 Buy Arduino EK R4 Experiment Kit](https://shop.stemsmartlabs.com/shop/neo-inventor-arduino-minima-r4/)
+ [🛒 Buy Arduino एक R4 Experiment Kit](https://shop.stemsmartlabs.com/shop/neo-inventor-arduino-minima-r4/)
 
 ## External Grove Ports:
 
-The **Arduino EK R4 Experiment Kit** offers **External Grove Ports** that make it easy to connect additional sensors and modules. We also support breadboarding via external port. This enables users to go beyond the pre-mounted components and experiment with new ideas, custom circuits, or external I2C devices.
+The **Arduino एक R4 Experiment Kit** offers **External Grove Ports** that make it easy to connect additional sensors and modules. We also support breadboarding via external port. This enables users to go beyond the pre-mounted components and experiment with new ideas, custom circuits, or external I2C devices.
 
 ## What You Can Do:
 
@@ -162,16 +162,16 @@ Projects that use the OLED display for real-time visual feedback.
 Display sensor values, animations, messages, or system status to bring projects to life.
 
 **You can access all application examples directly from the Arduino IDE:
-File → Examples → Arduino EK R4 Experiment Kit → examples → applications**
+File → Examples → Arduino एक R4 Experiment Kit → examples → applications**
 ## Featured Project Videos
 
 | **Project Title** | **Description / Highlights** | **Project Code** | **Video Link** |
 | --- | --- | --- | --- |
-| **Tic Tac Toe Game on Arduino EK R4** | Playable Tic Tac Toe using IR Remote & OLED Display | [View Code](https://github.com/STEMSmartLabs/Arduino-EK-R4-Experiment-Kit/blob/main/examples/applications/Games/tic_tac_toe/tic_tac_toe.ino) | [Watch Video](https://youtu.be/4XrE3T21CvA?list=PL_NAQ0cj_VWJGEcv7IAwLWgFyA2s_rXrA) |
-| **Arcade Cyclone Game with Arduino EK R4** | Fast-reaction LED ring game with NeoPixel + Buzzer | [View Code](https://github.com/STEMSmartLabs/Arduino-EK-R4-Experiment-Kit/tree/main/examples/applications/Games/arcade_cyclone) | [Watch Video](https://youtu.be/DR1ks8xgdQE?list=PL_NAQ0cj_VWJGEcv7IAwLWgFyA2s_rXrA) |
-| **Smart Parking Assist System with Arduino EK R4** | Ultrasonic sensor + NeoPixel + Buzzer to guide parking | [View Code](https://github.com/STEMSmartLabs/Arduino-EK-R4-Experiment-Kit/blob/main/examples/applications/Assistive%20Technology/parking_assist/parking_assist.ino) | [Watch Video](https://youtu.be/9raalE5PwAM?list=PL_NAQ0cj_VWJGEcv7IAwLWgFyA2s_rXrA) |
+| **Tic Tac Toe Game on Arduino एक R4** | Playable Tic Tac Toe using IR Remote & OLED Display | [View Code](https://github.com/STEMSmartLabs/Arduino-EK-R4-Experiment-Kit/blob/main/examples/applications/Games/tic_tac_toe/tic_tac_toe.ino) | [Watch Video](https://youtu.be/4XrE3T21CvA?list=PL_NAQ0cj_VWJGEcv7IAwLWgFyA2s_rXrA) |
+| **Arcade Cyclone Game with Arduino एक R4** | Fast-reaction LED ring game with NeoPixel + Buzzer | [View Code](https://github.com/STEMSmartLabs/Arduino-EK-R4-Experiment-Kit/tree/main/examples/applications/Games/arcade_cyclone) | [Watch Video](https://youtu.be/DR1ks8xgdQE?list=PL_NAQ0cj_VWJGEcv7IAwLWgFyA2s_rXrA) |
+| **Smart Parking Assist System with Arduino एक R4** | Ultrasonic sensor + NeoPixel + Buzzer to guide parking | [View Code](https://github.com/STEMSmartLabs/Arduino-EK-R4-Experiment-Kit/blob/main/examples/applications/Assistive%20Technology/parking_assist/parking_assist.ino) | [Watch Video](https://youtu.be/9raalE5PwAM?list=PL_NAQ0cj_VWJGEcv7IAwLWgFyA2s_rXrA) |
 | **Musical Keyboard with IR Remote** | IR remote as keyboard, buzzer for tones | [View Code](https://github.com/STEMSmartLabs/Arduino-EK-R4-Experiment-Kit/blob/main/examples/applications/Games/IR_keyboard/IR_keyboard.ino) | [Watch Video](https://youtu.be/FPQu9rpY4O8?list=PL_NAQ0cj_VWJGEcv7IAwLWgFyA2s_rXrA) |
-| **Tile Tower Game with Arduino EK R4** | OLED-based stacking game testing speed & timing | [View Code](https://github.com/STEMSmartLabs/Arduino-EK-R4-Experiment-Kit/blob/main/examples/applications/Games/tile_tower/tile_tower.ino) | [Watch Video](https://youtu.be/5Y-gn9RKH18?list=PL_NAQ0cj_VWJGEcv7IAwLWgFyA2s_rXrA) |
+| **Tile Tower Game with Arduino एक R4** | OLED-based stacking game testing speed & timing | [View Code](https://github.com/STEMSmartLabs/Arduino-EK-R4-Experiment-Kit/blob/main/examples/applications/Games/tile_tower/tile_tower.ino) | [Watch Video](https://youtu.be/5Y-gn9RKH18?list=PL_NAQ0cj_VWJGEcv7IAwLWgFyA2s_rXrA) |
 | **Smart Lock System using IR Remote, OLED, Servo, and Buzzer** | IR-based access control system with feedback mechanisms | [View Code](https://github.com/STEMSmartLabs/Arduino-EK-R4-Experiment-Kit/blob/main/examples/applications/Home%20Automation/IR_remote_lock/IR_remote_lock.ino) | [Watch Video](https://youtu.be/CuWeehWU5jA?list=PL_NAQ0cj_VWJGEcv7IAwLWgFyA2s_rXrA) |
 
 
@@ -186,6 +186,6 @@ This project is released under the MIT License.
 ## Contact
 
 Made in India by **STEM Smart Labs** 
-- 🛒 [Buy Arduino EK R4 Experiment Kit](https://shop.stemsmartlabs.com/shop/neo-inventor-arduino-minima-r4/) 
+- 🛒 [Buy Arduino एक R4 Experiment Kit](https://shop.stemsmartlabs.com/shop/neo-inventor-arduino-minima-r4/) 
 - 🌐 https://stemsmartlabs.com  
 - ✉️ hello@stemsmartlabs.com  

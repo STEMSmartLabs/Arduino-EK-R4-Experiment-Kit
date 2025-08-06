@@ -1,15 +1,15 @@
-# Arduino R4 Minima Experiment Kit 
+# Arduino EK R4 Experiment Kit 
 _Discover the Inventor in You_
 
 ![Made in India](https://img.shields.io/badge/Origin-Made%20in%20India-orange)
 
 ![Arduino EK R4 Experiment Kit](https://shop.stemsmartlabs.com/wp-content/uploads/2025/07/ArduinoEk_IMage.png)
 
-<a href="https://shop.stemsmartlabs.com/shop/neo-inventor-arduino-minima-r4/" target="_blank" rel="noopener">Buy Arduino EK R4 Experiment Kit</a>
- 
+ [🛒  Buy Arduino EK R4 Experiment Kit](https://shop.stemsmartlabs.com/shop/neo-inventor-arduino-minima-r4/)
+
 ## Overview:
 
-The **Arduino R4 Minima Experiment Kit** is a fully-loaded, classroom-ready development board designed to help students (and hobbyists) learn the fundamentals of electronics, programming, and mechatronics. It combines the power of the Arduino EK R4 Minima with onboard sensors, actuators, an OLED display, NeoPixel ring, and four Grove-compatible external sensor ports—everything you need to prototype 50+ hands-on projects.
+The **Arduino EK R4 Experiment Kit** is a fully-loaded, classroom-ready development board designed to help students (and hobbyists) learn the fundamentals of electronics, programming, and mechatronics. It combines the power of the **Arduino EK R4 Minima** with onboard sensors, actuators, an OLED display, NeoPixel ring, and four Grove-compatible external sensor ports—everything you need to prototype 50+ hands-on projects.
 
 
 ## Demo Program:
@@ -98,6 +98,8 @@ Click on the video link next to each module in the table below to watch a step-b
 | Switch | Reads toggle switch on/off state | [View Code](https://github.com/STEMSmartLabs/Arduino-EK-R4-Experiment-Kit/tree/main/examples/sensors/Switch/Switch.ino) | [Watch Video](https://youtu.be/XIhvD9RvUtk?list=PL_NAQ0cj_VWI-FwRrFVTtYNqDVCF2LvEG) |
 | Trimpot | Reads analog value from potentiometer | [View Code](https://github.com/STEMSmartLabs/Arduino-EK-R4-Experiment-Kit/tree/main/examples/sensors/TrimPOT/TrimPOT.ino) | [Watch Video](https://youtu.be/jsoSBXgQ93w?list=PL_NAQ0cj_VWI-FwRrFVTtYNqDVCF2LvEG) |
 
+ [🛒 Buy Arduino EK R4 Experiment Kit](https://shop.stemsmartlabs.com/shop/neo-inventor-arduino-minima-r4/)
+
 ## External Grove Ports:
 
 The **Arduino EK R4 Experiment Kit** offers **External Grove Ports** that make it easy to connect additional sensors and modules. We also support breadboarding via external port. This enables users to go beyond the pre-mounted components and experiment with new ideas, custom circuits, or external I2C devices.
@@ -118,11 +120,9 @@ Breadboarding allows you to connect sensors that are **not Grove-compatible** or
 | Sensor                | Description               |
 |-----------------------|---------------------------|
 | **PIR Motion Sensor** | Detects human movement    |
-| **IR Obstacle Sensor**| Detects nearby objects    |
 | **Gas Sensor (MQ-2)** | Detects smoke or gas      |
 | **Flame Sensor**      | Detects fire or flame     |
 | **Soil Moisture Sensor** | Measures soil wetness |
-| **Ultrasonic Sensor** | Measures distance with sound |
 
 > 💡 Use the breadboard for prototyping and testing these components before creating permanent circuits.
 
@@ -185,6 +185,7 @@ This project is released under the MIT License.
 
 ## Contact
 
-Made in India by **STEM Smart Labs**  
+Made in India by **STEM Smart Labs** 
+- 🛒 [Buy Arduino EK R4 Experiment Kit](https://shop.stemsmartlabs.com/shop/neo-inventor-arduino-minima-r4/) 
 - 🌐 https://stemsmartlabs.com  
 - ✉️ hello@stemsmartlabs.com  

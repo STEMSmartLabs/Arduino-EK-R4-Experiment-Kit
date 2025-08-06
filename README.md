@@ -5,6 +5,7 @@ _Discover the Inventor in You_
 
 ![Arduino EK R4 Experiment Kit](https://shop.stemsmartlabs.com/wp-content/uploads/2025/07/ArduinoEk_IMage.png)
 
+<a href="https://shop.stemsmartlabs.com/shop/neo-inventor-arduino-minima-r4/" target="_blank" rel="noopener">Buy Arduino EK R4 Experiment Kit</a>
  
 ## Overview:
 

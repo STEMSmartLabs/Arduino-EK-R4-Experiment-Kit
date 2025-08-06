@@ -112,7 +112,7 @@ The **Arduino EK R4 Experiment Kit** offers **External Grove Ports** that make i
 
 Breadboarding allows you to connect sensors that are **not Grove-compatible** or **not included in the kit**. Use jumper wires to easily integrate these external components with your microcontroller for extended functionality.
 
-### Example Sensors
+### Example Sensors (**not included in the kit**)
 
 | Sensor                | Description               |
 |-----------------------|---------------------------|

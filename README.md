@@ -108,9 +108,23 @@ The **Arduino EK R4 Experiment Kit** offers **External Grove Ports** that make i
 - Access **I2C communication** through the Grove expansion ports
 - Extend functionality using jumper wires and custom circuits
 
-## Watch the Breadboarding Tutorial
+## Breadboarding External Sensors
 
-Learn how to use external Grove ports with a breadboard and connect an accelerometer in this hands-on video: [Watch Video](https://youtu.be/37e9Oa_igdk?list=PL_NAQ0cj_VWI-FwRrFVTtYNqDVCF2LvEG)
+Breadboarding allows you to connect sensors that are **not Grove-compatible** or **not included in the kit**. Use jumper wires to easily integrate these external components with your microcontroller for extended functionality.
+
+### Example Sensors
+
+| Sensor                | Description               |
+|-----------------------|---------------------------|
+| **PIR Motion Sensor** | Detects human movement    |
+| **IR Obstacle Sensor**| Detects nearby objects    |
+| **Gas Sensor (MQ-2)** | Detects smoke or gas      |
+| **Flame Sensor**      | Detects fire or flame     |
+| **Soil Moisture Sensor** | Measures soil wetness |
+| **Ultrasonic Sensor** | Measures distance with sound |
+
+> 💡 Use the breadboard for prototyping and testing these components before creating permanent circuits.
+
 
 ## Real-World Applications & Projects
 
